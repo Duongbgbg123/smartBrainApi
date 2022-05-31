@@ -23,7 +23,7 @@ app.use(express.json());
 app.use(cors());
 const register = require('./controllers/register');
 const { handleProfile } = require('./controllers/profile');
-const { handleImage } = require('./controllers/image');
+const image = require('./controllers/image');
 const signin = require('./controllers/signin');
 const imageUrl = require('./controllers/imageUrl');
 
@@ -47,8 +47,8 @@ app.get('/profile/:id', () => {
   handleProfile;
 });
 
-app.put('/image', () => {
-  handleImage;
+app.put('/image', (req, res) => {
+  image.handleImage(req, res, db);
 });
 
 app.listen(process.env.PORT || 3000, () => {
