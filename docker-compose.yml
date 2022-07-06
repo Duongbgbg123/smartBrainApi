@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+  smartbrainback:
+    container_name: back
+    # image : node:14.17.0
+    environment:
+      POSTGRES_URI: postgres://sally:secret@postgres:5432/smart-brain-docker
+      REDIS_URI : redis://redis:6379
+    build: ./
+    command : npm start
+    working_dir : /usr/src/smart-brain-back
+    ports:
+      - 3000:3000
+    volumes : 
+      - ./:/usr/src/smart-brain-back
+
+  postgres:
+    build: ./postgres
+    environment:
+      POSTGRES_USER: sally
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: smart-brain-docker
+      POSTGRES_HOST: postgres
+    ports: 
+      - 5432:5432
+
+  redis:
+    container_name : redis
+    image: redis
+    ports: 
+      - 6379:6379
+
+
+  
+  
